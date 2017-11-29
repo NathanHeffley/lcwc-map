@@ -1,0 +1,13 @@
+{
+  "name": "lcwc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Nathan Heffley",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2",
+    "pug": "^2.0.0-rc.4",
+    "rss-parser": "^2.10.8"
+  }
+}

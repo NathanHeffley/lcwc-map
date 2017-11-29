@@ -1,0 +1,60 @@
+html
+    head
+        title= title
+        meta(name="viewport" content="initial-scale=1.0, width=device-width")
+
+        style.
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            #mapContainer {
+                width: 100%;
+            }
+
+            .info-bubble {
+                opacity: 0.75;
+                padding: 0 5px;
+                pointer-events: none;
+            }
+
+            .info-bubble .info-bubble-title {
+                font-size: 15px;
+                margin-left: 2px;
+            }
+
+            .info-bubble .info-bubble-label {
+                font-size: 10px;
+                opacity: 0.7;
+                margin-left: 2px;
+            }
+
+            .info-bubble .H_ib_close {
+                display: none;
+            }
+
+            .info-bubble .H_ib_body {
+                padding: 0;
+            }
+    body
+        each entry in entries
+            h2 !{entry.title}
+            p !{entry.township}
+            p !{entry.location}
+            p !{entry.vehicles}
+
+        div#mapContainer
+
+        script(src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript")
+        script(src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript")
+        script(src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript")
+        script(src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript")
+        script(src="https://js.api.here.com/v3/3.0/mapsjs-clustering.js" type="text/javascript")
+        script(src="https://js.datalens.api.here.com/latest/mapsjs-datalens.js" type="text/javascript")
+        script(src="https://d3js.org/d3.v4.min.js" type="text/javascript")
+        script(src="/public/ui.js" type="text/javascript")
+        script.
+            let eventEntries = !{JSON.stringify(entries)}
+            Object.assign(window, {eventEntries});
+        script(src="/public/map.js" type="text/javascript")
