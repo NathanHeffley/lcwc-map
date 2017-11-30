@@ -38,8 +38,10 @@ for (var key in eventEntries) {
     };
 
     let eventIcon;
-    if (eventEntries[key].title == "MEDICAL EMERGENCY") {
+    if (eventEntries[key].title.includes('MEDICAL EMERGENCY')) {
         eventIcon = {icon: icons['medicalEmergency']};
+    } else if (eventEntries[key].title.includes('ROUTINE TRANSFER')) {
+        eventIcon = {icon: icons['routineTransfer']};
     } else {
         eventIcon = {};
     }
