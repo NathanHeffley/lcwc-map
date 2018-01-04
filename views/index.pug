@@ -6,11 +6,26 @@ html
         style.
             body {
                 margin: 0;
-                padding: 0;
+                padding: 5vh 5vw;
             }
 
             #mapContainer {
-                width: 100%;
+                height: 90vh;
+                width: 90vw;
+                margin-top: 5vh;
+            }
+
+            .entry h2 {
+                margin-bottom: .5em;
+            }
+
+            .entry p,
+            .entry li {
+                text-transform: capitalize;
+            }
+
+            .entry + .entry {
+                margin-top: 3em;
             }
 
             .info-bubble {
@@ -39,10 +54,13 @@ html
             }
     body
         each entry in entries
-            h2 !{entry.title}
-            p !{entry.township}
-            p !{entry.location}
-            p !{entry.vehicles}
+            div.entry
+                h2 !{entry.title}
+                p District: !{entry.township}
+                p Location: !{entry.location}
+                p Assigned:
+                    ul
+                        li !{entry.vehicles}
 
         div#mapContainer
 

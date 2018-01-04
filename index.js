@@ -25,14 +25,17 @@ app.get('/', (req, res) => {
 
             entries.push({
                 title: entry.title,
-                township: township.trim(),
-                location: location.trim(),
-                vehicles: vehicles.trim(),
+                township: township.trim().toLowerCase(),
+                location: location.trim().toLowerCase(),
+                vehicles: vehicles.trim().toLowerCase().replace('qrs', 'QRS'),
             });
         });
 
-        console.log(entries);
-        res.render('index', { title: parsed.feed.title, entries: entries });
+        if (typeof parsed !== 'undefined') {
+            res.render('index', { title: parsed.feed.title, entries: entries });
+        } else {
+            return 'Error loading LCWC data...';
+        }
     });
 });
 
