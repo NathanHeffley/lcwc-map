@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
         parsed.feed.entries.forEach(function (entry) {
             let [township, ...meta] = entry.content.split(';');
 
-            let location ="", vehicles = "";
+            let location = '', vehicles = '';
 
             if (hasVehicleName(meta[0]) && !hasStreetName(meta[0])) {
                 vehicles = meta[0];
@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
 app.listen(3000, () => console.log('LCWC RSS Feeder listening on port 3000'));
 
 function hasVehicleName(data) {
-    return new RegExp("ENGINE|MEDIC|AMBULANCE|QRS|BRUSH").test(data);
+    return new RegExp("ENGINE|MEDIC|AMBULANCE|QRS|BRUSH|TRAFFIC|POLICE").test(data);
 }
 
 function hasStreetName(data) {
-    return new RegExp("RD|ST|CT|CIR|AVE|LN|PIKE|DR").test(data)
+    return new RegExp("RD|ST|ALY|CT|CIR|AVE|LN|PIKE|DR|ROUTE|RAMP").test(data)
 }

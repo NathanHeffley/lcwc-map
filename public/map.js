@@ -38,10 +38,10 @@ for (var key in eventEntries) {
     };
 
     let eventIcon;
-    if (eventEntries[key].title.includes('MEDICAL EMERGENCY')) {
-        eventIcon = {icon: icons['medicalEmergency']};
-    } else if (eventEntries[key].title.includes('ROUTINE TRANSFER')) {
-        eventIcon = {icon: icons['routineTransfer']};
+    if (eventEntries[key].title.includes('MEDICAL EMERGENCY') || eventEntries[key].title.includes('ROUTINE TRANSFER')) {
+        eventIcon = {icon: icons['medical']};
+    } else if (eventEntries[key].title.includes('FIRE') || eventEntries[key].title.includes('AUTO ALARM')) {
+        eventIcon = {icon: icons['fire']};
     } else {
         eventIcon = {};
     }

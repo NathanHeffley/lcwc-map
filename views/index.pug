@@ -58,9 +58,10 @@ html
                 h2 !{entry.title}
                 p District: !{entry.township}
                 p Location: !{entry.location}
-                p Assigned:
-                    ul
-                        li !{entry.vehicles}
+                if (entry.vehicles.length)
+                    p Assigned:
+                        ul
+                            li !{entry.vehicles}
 
         div#mapContainer
 
