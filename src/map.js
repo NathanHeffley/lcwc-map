@@ -2,7 +2,8 @@
 
 const platform = new H.service.Platform({
     'app_id': 'eFS3M5T0uIHDfkRQ63eI',
-    'app_code': '0C6fpsJ_85YIozuEgnQrhQ'
+    'app_code': '0C6fpsJ_85YIozuEgnQrhQ',
+    'useHTTPS': true
 })
 
 const pixelRatio = devicePixelRatio > 1 ? 2 : 1;
