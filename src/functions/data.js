@@ -1,20 +1,19 @@
-exports.handler = function(event, context, callback) {
-    let entries = [];
+import RSSParser from 'rss-parser'
+const parser = new RSSParser()
 
-    let parser = require('rss-parser')
+exports.handler = function (event, context, callback) {
     parser.parseURL('http://www.lcwc911.us/lcwc/lcwc/incidents.xml', function (err, parsed) {
         if (err) {
             callback(null, {
                 statusCode: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: err,
+                body: 'Something went wrong...'
             })
             return
         }
 
-        parsed.feed.entries.forEach(function (entry) {
+        let entries = [];
+
+        parsed.items.forEach((entry) => {
             let [township, ...meta] = entry.content.split(';')
 
             let location = '', vehicles = ''
@@ -36,10 +35,15 @@ exports.handler = function(event, context, callback) {
 
         callback(null, {
             statusCode: 200,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: entries,
+            body: JSON.stringify(entries)
         })
     })
+}
+
+function hasVehicleName(data) {
+    return new RegExp("ENGINE|MEDIC|AMBULANCE|QRS|BRUSH|TRAFFIC|POLICE").test(data);
+}
+
+function hasStreetName(data) {
+    return new RegExp("RD|ST|ALY|CT|CIR|AVE|LN|PIKE|DR|ROUTE|RAMP").test(data)
 }
