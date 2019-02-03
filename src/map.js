@@ -28,8 +28,6 @@ let map = new H.Map(
 new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
 let ui = H.ui.UI.createDefault(map, layers)
-ui.removeControl('mapsettings')
-ui.removeControl('zoom')
 
 window.addEventListener('resize', function() {
     map.getViewPort().resize()
@@ -42,6 +40,16 @@ fetch('/.netlify/functions/data').then((response) => {
 })
 
 function setEventEntries(eventEntries) {
+    let group = new H.map.Group();
+    map.addObject(group);
+
+    group.addEventListener('tap', function (event) {
+        let bubble = new H.ui.InfoBubble(event.target.getPosition(), {
+            content: event.target.getData()
+        })
+        ui.addBubble(bubble)
+    }, false)
+
     for (var key in eventEntries) {
         var geocodingParams = {
             searchText: `${eventEntries[key].location}, ${eventEntries[key].township}, PA`
@@ -56,24 +64,33 @@ function setEventEntries(eventEntries) {
             eventIcon = {};
         }
 
-        var onResult = function(result) {
+        let title = eventEntries[key].title
+        let address = eventEntries[key].location
+        let township = eventEntries[key].township
+
+        let onResult = function(result) {
             if (result.Response.View.length > 0) {
-                var locations = result.Response.View[0].Result,
+                let locations = result.Response.View[0].Result,
                     position,
                     marker;
-                for (var i = 0; i < locations.length; i++) {
+                for (let i = 0; i < locations.length; i++) {
                     position = {
                         lat: locations[i].Location.DisplayPosition.Latitude,
                         lng: locations[i].Location.DisplayPosition.Longitude
-                    };
+                    }
+
                     marker = new H.map.Marker(position, eventIcon);
-                    map.addObject(marker);
+                    marker.setData(
+                        title +
+                        `<br>${address}` +
+                        `<br>${township}`
+                    )
+                    group.addObject(marker);
                 }
             }
         };
 
         var geocoder = platform.getGeocodingService();
-
         geocoder.geocode(geocodingParams, onResult, function(e) {
             console.log(e);
         });
