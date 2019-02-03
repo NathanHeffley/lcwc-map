@@ -34,7 +34,7 @@ window.addEventListener('resize', function() {
     map.getViewPort().resize()
 })
 
-fetch('http://localhost:8080/.netlify/functions/data').then((response) => {
+fetch('/.netlify/functions/data').then((response) => {
     return response.json()
 }).then(function (data) {
     setEventEntries(data)
